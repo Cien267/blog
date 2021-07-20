@@ -2,6 +2,38 @@
 
 @section('content')
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Share to:</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body" >
+          {{-- <ul style="list-style: none; text-decoration: none; display: flex; justify-content: space-between;"> --}}
+
+           {!! $share !!}
+              {{-- <li><a href="{{$fb}}"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+              <li><a href="{{$tt}}"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+              <li><a href="{{$fb}}"><i class="fa fa-reddit" aria-hidden="true"></i></a></li>
+              <li><a href="{{$li}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+              <li><a href="{{$wa}}"><i class="fa fa-whatsapp" aria-hidden="true"></i></a></li>
+              <li><a href="{{$tl}}"><i class="fa fa-telegram" aria-hidden="true"></i></a></li>
+          </ul> --}}
+
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Share</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
     <div class="main-wrapper">
 
 	    <article class="blog-post px-3 py-5 p-md-5">
@@ -10,7 +42,7 @@
 
 			    <header class="blog-post-header">
 				    <h2 class="title mb-2">{{$post->post_title}}</h2>
-				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true"></i></a></span></div>
+				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="{{route('post.like', $post->post_id)}}">{{$post->like}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></a></span></div>
 
                         <div class="meta mb-3">
                             @foreach ($tags as $tag)
@@ -23,7 +55,7 @@
 
 			    <div class="blog-post-body">
 
-				    <h3 class="mt-5 mb-3">Author:  <a href="{{route('check-authorization',$post->user->id)}}">{{$post->user->name}}</a> </h3>
+				    <h3 class="mt-5 mb-3">Author:  <a id="link" href="{{route('check-authorization',$post->user->id)}}">{{$post->user->name}}</a> </h3>
 				    <p>{{$post->post_content}}</p>
 				    <pre>
 					    <code style="color: green">
@@ -35,15 +67,13 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="container mb-5 mt-5">
-    <div class="card">
-        <div class="row">
+    <div class="card" id="comment">
 
-            <div class="col-md-12" id="comment">
                 <h3 class="text-center mb-5">Comments ({{count($comments)}})</h1></h3>
             @foreach ($comments as $comment )
                 @if($comment->parent_id == 0)
-                <div class="row">
-                    <div class="col-md-12">
+                <div class="row" >
+                    <div class="col-md-12" >
                         <div class="media"> <a href="{{route('check-authorization',$comment->user->id)}}"><img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{ url( '/images/'.$comment->user->image ) }}" /> </a>
                             <div class="media-body pb-5">
                                 <div class="row">
@@ -51,9 +81,11 @@
                                         <h5><a href="{{route('check-authorization',$comment->user->id)}}">{{$comment->user->name}}</a></h5> <span class="pl-2"><i class="fa fa-clock-o"></i> Posted at {{$comment->created_at}}</span>
                                     </div>
                                     <div class="col-4">
-                                        <div class="pull-right reply"> <button class="btn btn-link" id="reply_button"><span><i class="fa fa-reply"></i> reply</span></button> </div>
+                                        <div class="pull-right reply"> <button class="btn btn-link reply_button" ><span><i class="fa fa-reply"></i> reply</span></button> </div>
                                     </div>
-                                </div> {{$comment->content}}
+                                </div>
+                                <div>{{$comment->content}}</div>
+
                                 @foreach ($comment->replies as $reply)
                                 <div class="media mt-4"> <a class="pr-3" href="{{route('check-authorization',$comment->user->id)}}"><img class="rounded-circle" alt="Bootstrap Media Another Preview" src="{{ url( '/images/'.$reply->user->image ) }}" /></a>
                                     <div class="media-body">
@@ -67,16 +99,16 @@
                                     </div>
                                 </div>
                                 @endforeach
-                                <div class="row leave_comment pt-4">
+                                <div class="row leave_comment pt-4" >
                                     <form class="form-block" method="post" action="{{route('user.comment.reply.store', $post->post_id)}}">
                                         @csrf
                                              <div class="text-info ">Reply here:</div>
                                             <div class="col-xs-12">
                                                 <div class="form-group">
-                                                    <textarea name="reply_content" id="reply_field" class="form-input" required="" placeholder="Text here"></textarea>
+                                                    <textarea name="reply_content" id="" class="form-input reply_field" required="" placeholder="Text here"></textarea>
                                                 </div>
                                             </div>
-                                            <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
+
                                             <input type="submit" class="btn btn-primary pull-right" value="Reply">
                                     </form>
                                 </div>
@@ -85,12 +117,16 @@
                         </div>
 
                     </div>
+
                 </div>
                 @endif
             @endforeach
 
+
+            </div>
+
                 <div class="row leave_comment" >
-                    <form class="form-block" method="post" action="{{route('user.comment.store', $post->post_id)}}">
+                    <form class="form-block leave_comment" method="post" action="{{route('user.comment.store', $post->post_id)}}">
                         @csrf
                             <div class="row pt-4 font-weight-bold text-info pl-4">
                                 Leave a comment:
@@ -98,23 +134,20 @@
 
                             <div class="col-xs-12">
                                 <div class="form-group">
-                                    <textarea name="comment_content" class="form-input" required="" placeholder="Text here"></textarea>
+                                    <textarea id="comment_content" name="comment_content" class="form-input" required="" placeholder="Text here"></textarea>
                                 </div>
                             </div>
-
-                            <input type="submit" class="btn btn-primary pull-right" value="Comment">
+                            <input type="hidden" value="{{$post->post_id}}" name="postid">
+                            <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
+                            <input type="hidden" name="author_id" value="{{ $post->user->id }}" />
+                            <input type="submit" class="btn btn-primary pull-right" id="leave_comment_button" value="Comment">
                     </form>
                 </div>
 
 
-            </div>
-        </div>
-    </div>
+
+
 </div>
-
-
-
-
 
   <div class="footer-basic">
     <footer>

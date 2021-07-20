@@ -6,6 +6,8 @@ use App\Post;
 use App\User;
 use App\Comment;
 
+use Pusher\Pusher;
+use App\Events\NewComment;
 use Illuminate\Http\Request;
 use App\Http\Requests\ImageRequest;
 
@@ -87,11 +89,19 @@ class HomeController extends Controller
         $userId = auth()->user()->id;
         $postId = $post->post_id;
 
+        // dd($request);
+
         Comment::create([
             'content' => $request->comment_content,
             'user_id' => $userId,
             'post_id' => $postId,
         ]);
+
+        $comment = ['content' => $request->comment_content,'user_id' => $userId,'post_id' => $postId, 'created_at' => now()];
+        $user = ['id' => $userId, 'name' => auth()->user()->name, 'image' =>  auth()->user()->image];
+
+        event(new NewComment($comment, $user));
+
         return back();
     }
 

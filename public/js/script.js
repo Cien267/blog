@@ -1,3 +1,3 @@
-document.getElementById('reply_button').onclick = function() {
-    document.getElementById('reply_field').focus();
-};
+// document.getElementsByClassName('reply_button').onclick = function() {
+//     document.getElementsByClassName('reply_field').focus();
+// };

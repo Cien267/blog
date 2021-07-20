@@ -1,7 +1,8 @@
 <?php
+use App\Events\NewComment;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -59,7 +60,7 @@ Route::get('/profile/edit', 'HomeController@editProfile')->name('user.profile.ed
 
 Route::post('/profile/update', 'HomeController@updateProfile')->name('user.profile.update');
 
-Route::post('/{post}/detail/store_comment', 'HomeController@storeComment')->name('user.comment.store');
+Route::post('/detail/store_comment/{post}', 'HomeController@storeComment')->name('user.comment.store');
 
 Route::post('/{post}/detail/store_reply', 'HomeController@storeReply')->name('user.comment.reply.store');
 
@@ -67,7 +68,7 @@ Route::get('/tags', 'TagController@tagList')->name('tags');
 
 Route::get('{id}/tag/posts', 'TagController@tagPosts')->name('tag.posts');
 
-
+Route::get('{id}/post/like', 'PostController@countLike')->name('post.like');
 
 
 

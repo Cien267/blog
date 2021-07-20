@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use DB;
+use App\Tag;
 use App\Post;
 use App\User;
 use App\Comment;
-use App\Tag;
+use Jorenvh\Share\Share;
 use Illuminate\Http\Request;
-use App\Services\UserService;
 
+use App\Services\UserService;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -117,13 +118,33 @@ class PostController extends Controller
             // dd($post->load('tags'));
         $tags = $post->tags;
 
+        $share =  new Share();
+        $share->currentPage()->facebook()
+                            ->twitter()
+                            ->linkedin()
+                            ->whatsapp()
+                            ->telegram()
 
+                       ;
+
+
+        // dd($share);
         // $tags = Tag::with('posts')->first()->posts;
 
 
         return view('detail')->with('post',$post)
                             ->with('comments', $comments)
-                            ->with('tags',$tags);
+                            ->with('tags',$tags)
+                            ->with('share', $share);
+    }
+
+    public function countLike($id){
+        $post = Post::where('post_id', $id)->first();
+        $likeAmount =  $post->like;
+        $likeAmount++;
+        $post->like = $likeAmount;
+        $post->save();
+        return back();
     }
 
 

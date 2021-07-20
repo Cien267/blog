@@ -13,6 +13,89 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/script.js') }}" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
+    <script src="{{ asset('js/share.js') }}"></script>
+
+    <script>
+         $(document).ready(function () {
+
+            //ajax
+
+
+
+            // Enable pusher logging - don't include this in production
+            Pusher.logToConsole = true;
+
+
+            var pusher = new Pusher('7d211f0edc5b3cebe172', {
+            cluster: 'ap1',
+            forceTLS: true
+            });
+
+            // $(document),ready(function(){
+                var channel = pusher.subscribe('my-channel');
+                channel.bind('comment-added', function(data) {
+
+
+                    console.log($('#link').attr('href')); //http://localhost:8000/1/profile
+                    console.log(data.user.id);
+                    var author_id = $("input[name=author_id]").val();
+                    var x = $('#link').attr('href').replace(author_id, data.user.id);
+                    console.log(x);
+
+                    $('#comment').append(`
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="media"> <a href="${x}"><img class="mr-3 rounded-circle" alt="Bootstrap Media Preview" src="{{ url( '/images/${data.user.image}' ) }}" /> </a>
+                                    <div class="media-body pb-5">
+                                        <div class="row">
+                                            <div class="col-8 d-flex">
+                                                <h5><a href="${x}">${data.user.name}</a></h5> <span class="pl-2"><i class="fa fa-clock-o"></i> Posted at ${data.comment.created_at}<span id="post_at"></span></span>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="pull-right reply"> <button class="btn btn-link" id="reply_button"><span><i class="fa fa-reply"></i> reply</span></button> </div>
+                                            </div>
+                                        </div>
+                                        <div class="cmt_content">
+                                            ${data.comment.content}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    `);
+                });
+            });
+
+            
+            $('#leave_comment_button').click(function(){
+
+            var content = $("textarea[name=comment_content]").val();
+            var user_id = "{{ Auth::id() }}";
+            var post_id = $("input[name=postid]").val();
+
+            $.ajax({
+                type: "post",
+                url: "/detail/store_comment/" + post_id,
+                data: {
+                    content: content,
+                    user_id: user_id,
+                    post_id: post_id,
+                },
+                success: function(data){
+
+                }
+            });
+
+
+
+        });
+    </script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
