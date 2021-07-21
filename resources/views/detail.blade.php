@@ -134,7 +134,7 @@
                                              <div class="text-info ">Reply here:</div>
                                             <div class="col-xs-12">
                                                 <div class="form-group">
-                                                    <textarea name="reply_content" id="" class="form-input reply_field" required="" placeholder="Text here"></textarea>
+                                                    <textarea name="reply_content" class="form-input reply_field" required="" placeholder="Text here"></textarea>
                                                 </div>
                                             </div>
 
@@ -155,8 +155,8 @@
             </div>
 
                 <div class="row leave_comment" >
-                    <form class="form-block leave_comment" method="post" action="{{route('user.comment.store', $post->post_id)}}">
-                        @csrf
+                    {{-- <form class="form-block leave_comment" method="post" action="{{route('user.comment.store', $post->post_id)}}">
+                        @csrf --}}
                             <div class="row pt-4 font-weight-bold text-info pl-4">
                                 Leave a comment:
                             </div>
@@ -169,7 +169,7 @@
                             <input type="hidden" value="{{$post->post_id}}" name="postid">
                             <input type="hidden" name="author_id" value="{{ $post->user->id }}" />
                             <input type="submit" class="btn btn-primary pull-right" id="leave_comment_button" value="Comment">
-                    </form>
+                    {{-- </form> --}}
                 </div>
 
 
@@ -196,10 +196,7 @@
         </footer>
     </div>
     </div>
+    <button class="test">abc</button>
 </div>
-<script>
-    $('.test').click(function(){
-            console.log('abcaaaaaa');
-        });
-</script>
+
 @endsection

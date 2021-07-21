@@ -60,7 +60,7 @@ Route::get('/profile/edit', 'HomeController@editProfile')->name('user.profile.ed
 
 Route::post('/profile/update', 'HomeController@updateProfile')->name('user.profile.update');
 
-Route::post('/detail/store_comment/{post}', 'HomeController@storeComment')->name('user.comment.store');
+Route::post('/detail/store_comment', 'HomeController@storeComment')->name('user.comment.store');
 
 Route::post('/{post}/detail/store_reply', 'HomeController@storeReply')->name('user.comment.reply.store');
 

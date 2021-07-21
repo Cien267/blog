@@ -19,33 +19,47 @@
     <script src="{{ asset('js/script.js') }}"></script>
 
     <script stype="text/javascript">
-         $(document).ready(function () {
-
+        $(document).ready(function () {
+            $('.test').click(function(){
+                console.log('hello');
+            });
             //ajax
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $('#leave_comment_button').click(function(){
+                    var content = $("textarea[name=comment_content]").val();
+                    var user_id = "{{ Auth::id() }}";
+                    var post_id = $("input[name=postid]").val();
+                    $.ajax({
+                        url: "/detail/store_comment",
+                        type: "POST",
+                        data: {
+                            content: content,
+                            user_id: user_id,
+                            post_id: post_id,
+                        }
+                    });
+                });
 
 
 
-            // Enable pusher logging - don't include this in production
+            //pusher
             Pusher.logToConsole = true;
-
-
             var pusher = new Pusher('7d211f0edc5b3cebe172', {
             cluster: 'ap1',
             forceTLS: true
             });
-
-            // $(document),ready(function(){
-                var channel = pusher.subscribe('my-channel');
-                channel.bind('comment-added', function(data) {
-
-
-                    console.log($('#link').attr('href')); //http://localhost:8000/1/profile
-                    console.log(data.user.id);
-                    var author_id = $("input[name=author_id]").val();
-                    var x = $('#link').attr('href').replace(author_id, data.user.id);
-                    console.log(x);
-
-                    $('#comment').append(`
+            var channel = pusher.subscribe('my-channel');
+            channel.bind('comment-added', function(data) {
+                console.log($('#link').attr('href')); //http://localhost:8000/1/profile
+                console.log(data.user.id);
+                var author_id = $("input[name=author_id]").val();
+                var x = $('#link').attr('href').replace(author_id, data.user.id);
+                console.log(x);
+                $('#comment').append(`
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
@@ -69,30 +83,11 @@
 
                         </div>
                     </div>
-                    `);
-                });
+                `);
+
+
+
             });
-
-
-            $('#leave_comment_button').click(function(){
-
-            var content = $("textarea[name=comment_content]").val();
-            var user_id = "{{ Auth::id() }}";
-            var post_id = $("input[name=postid]").val();
-
-            $.ajax({
-                type: "post",
-                url: "/detail/store_comment/" + post_id,
-                data: {
-                    content: content,
-                    user_id: user_id,
-                    post_id: post_id,
-                },
-                success: function(data){
-
-                }
-            });
-
 
 
 

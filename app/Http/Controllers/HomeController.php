@@ -85,24 +85,30 @@ class HomeController extends Controller
         return redirect()->route('user.profile')->with('success','Your profile has been updated');
     }
 
-    public function storeComment(Request $request, Post $post){
-        $userId = auth()->user()->id;
-        $postId = $post->post_id;
+    public function storeComment(Request $request){
+        // $userId = auth()->user()->id;
+        // $postId = $post->post_id;
 
-        // dd($request);
 
-        Comment::create([
-            'content' => $request->comment_content,
-            'user_id' => $userId,
-            'post_id' => $postId,
-        ]);
+        // Comment::create([
+        //     'content' => $request->comment_content,
+        //     'user_id' => $userId,
+        //     'post_id' => $postId,
+        // ]);
 
-        $comment = ['content' => $request->comment_content,'user_id' => $userId,'post_id' => $postId, 'created_at' => now()];
-        $user = ['id' => $userId, 'name' => auth()->user()->name, 'image' =>  auth()->user()->image];
+        $data = $request->all();
+        $comment = new Comment();
+        $comment->content = $data['content'];
+        $comment->user_id = $data['user_id'];
+        $comment->post_id = $data['post_id'];
+        $comment->save();
+
+        $comment = ['content' => $data['content'],'user_id' => $data['user_id'],'post_id' => $data['post_id'], 'created_at' => now()];
+        $user = ['id' => $data['user_id'], 'name' => auth()->user()->name, 'image' =>  auth()->user()->image];
 
         event(new NewComment($comment, $user));
 
-        return back();
+        // return back();
     }
 
     public function storeReply(Request $request, Post $post){
