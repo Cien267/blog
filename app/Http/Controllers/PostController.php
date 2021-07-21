@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use DB;
 use App\Tag;
 use App\Post;
+use App\Rate;
 use App\User;
 use App\Comment;
 use Jorenvh\Share\Share;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
@@ -132,10 +133,14 @@ class PostController extends Controller
         // $tags = Tag::with('posts')->first()->posts;
 
 
+        $rating = round(Rate::where('post_id',$post->post_id)->avg('rating'));
+
+
         return view('detail')->with('post',$post)
                             ->with('comments', $comments)
                             ->with('tags',$tags)
-                            ->with('share', $share);
+                            ->with('share', $share)
+                            ->with('rating', $rating);
     }
 
     public function countLike($id){
@@ -147,5 +152,22 @@ class PostController extends Controller
         return back();
     }
 
+
+    public function rate(Post $post){
+
+        $rating = round(Rate::where('post_id',$post->post_id)->avg('rating'));
+        return view('rate')->with('post',$post)
+                            ->with('rating',$rating);
+    }
+
+    public function insert_rate(Request $request){
+        $data = $request->all();
+        $rate = new Rate();
+        $rate->post_id = $data['post_id'];
+        $rate->rating = $data['index'];
+        $rate->user_id = $data['user_id'];
+        $rate->save();
+        
+    }
 
 }

@@ -70,6 +70,11 @@ Route::get('{id}/tag/posts', 'TagController@tagPosts')->name('tag.posts');
 
 Route::get('{id}/post/like', 'PostController@countLike')->name('post.like');
 
+Route::get('{post}/rate', 'PostController@rate')->name('rate');
+
+Route::post('/insert-rate', 'PostController@insert_rate');
+
+
 
 
 

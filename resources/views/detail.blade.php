@@ -42,7 +42,33 @@
 
 			    <header class="blog-post-header">
 				    <h2 class="title mb-2">{{$post->post_title}}</h2>
-				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="{{route('post.like', $post->post_id)}}">{{$post->like}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></a></span></div>
+				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="{{route('post.like', $post->post_id)}}">{{$post->like}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></a></span> <span>
+                        <ul class="list-inline rating"style="display:flex" title="average rating">
+                            @for ($count = 1; $count <= 5; $count++ )
+                            @php
+                                if($count <= $rating){
+                                    $color = 'color:#ffcc00';
+                                }else{
+                                    $color = 'color:#ccc';
+                                }
+
+                            @endphp
+                                <li title="star-rating"
+                                id="{{$post->post_id}}-{{$count}}"
+                                data-index="{{$count}}"
+                                data-post_id="{{$post->post_id}}"
+                                data-user_id="{{$post->user->id}}"
+                                data-rating="{{$rating}}"
+                                class="rating"
+                                style="cursor:pointer; {{$color}}; font-size: 30px;"
+
+                                >&#9733</li>
+                            @endfor
+                    </ul>
+                    <a href="{{route('rate', $post->post_id)}}" class="btn btn-outline-warning">Rate this post</a>
+
+                </span>
+            </div>
 
                         <div class="meta mb-3">
                             @foreach ($tags as $tag)
@@ -61,6 +87,9 @@
 					    <code style="color: green">
                             if you like this post, do not hesitate to give it a like: <a href="#"><i style="font-size: 30px" class="fa fa-thumbs-o-up" aria-hidden="true"></i></a>
 					    </code>
+                        <code>
+
+                        </code>
 				    </pre>
 			    </div>
 
@@ -138,7 +167,6 @@
                                 </div>
                             </div>
                             <input type="hidden" value="{{$post->post_id}}" name="postid">
-                            <input type="hidden" name="comment_id" value="{{ $comment->id }}" />
                             <input type="hidden" name="author_id" value="{{ $post->user->id }}" />
                             <input type="submit" class="btn btn-primary pull-right" id="leave_comment_button" value="Comment">
                     </form>
@@ -169,4 +197,9 @@
     </div>
     </div>
 </div>
+<script>
+    $('.test').click(function(){
+            console.log('abcaaaaaa');
+        });
+</script>
 @endsection

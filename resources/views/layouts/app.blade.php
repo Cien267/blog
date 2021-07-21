@@ -12,12 +12,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/script.js') }}" defer></script>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="{{ asset('js/share.js') }}"></script>
+    <script src="{{ asset('js/script.js') }}"></script>
 
-    <script>
+    <script stype="text/javascript">
          $(document).ready(function () {
 
             //ajax
@@ -72,7 +73,7 @@
                 });
             });
 
-            
+
             $('#leave_comment_button').click(function(){
 
             var content = $("textarea[name=comment_content]").val();
@@ -91,6 +92,12 @@
 
                 }
             });
+
+
+
+
+
+
 
 
 
