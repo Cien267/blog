@@ -86,15 +86,7 @@ class HomeController extends Controller
     }
 
     public function storeComment(Request $request){
-        // $userId = auth()->user()->id;
-        // $postId = $post->post_id;
 
-
-        // Comment::create([
-        //     'content' => $request->comment_content,
-        //     'user_id' => $userId,
-        //     'post_id' => $postId,
-        // ]);
 
         $data = $request->all();
         $comment = new Comment();
@@ -108,7 +100,15 @@ class HomeController extends Controller
 
         event(new NewComment($comment, $user));
 
-        // return back();
+
+        // //comment notification
+        // $userId  = $data['post_id'];
+        // if($userId != auth()->user()->id){
+        //     $user = User::where('id',$userId)->first();
+        //     $user->notify(new NewCommentNotification($data['content']));
+
+        // }
+
     }
 
     public function storeReply(Request $request, Post $post){
@@ -125,6 +125,7 @@ class HomeController extends Controller
 
         $post->comments()->save($reply);
 
+
         return back();
 
     }
@@ -136,4 +137,6 @@ class HomeController extends Controller
 
         return view('profile_friend')->with('user',$user);
     }
+
+
 }

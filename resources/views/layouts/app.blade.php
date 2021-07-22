@@ -121,9 +121,10 @@
                 <a class="navbar-brand" href="{{ url('/tags') }}">
                     <i class="fa fa-tags" aria-hidden="true"></i>
                 </a>
-                <a class="navbar-brand" href="{{ url('#') }}">
+                <a class="navbar-brand" href="{{ url('/notification') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

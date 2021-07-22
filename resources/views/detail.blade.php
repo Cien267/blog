@@ -2,6 +2,7 @@
 
 @section('content')
 
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -65,7 +66,7 @@
                                 >&#9733</li>
                             @endfor
                     </ul>
-                    <a href="{{route('rate', $post->post_id)}}" class="btn btn-outline-warning">Rate this post</a>
+                    <a href="{{route('rate', $post->post_id)}}" class="btn btn-outline-primary">Rate this post</a>
 
                 </span>
             </div>
@@ -137,7 +138,7 @@
                                                     <textarea name="reply_content" class="form-input reply_field" required="" placeholder="Text here"></textarea>
                                                 </div>
                                             </div>
-
+                                            <input type="hidden" value="{{$comment->id}}" name="comment_id">
                                             <input type="submit" class="btn btn-primary pull-right" value="Reply">
                                     </form>
                                 </div>
@@ -167,6 +168,7 @@
                                 </div>
                             </div>
                             <input type="hidden" value="{{$post->post_id}}" name="postid">
+
                             <input type="hidden" name="author_id" value="{{ $post->user->id }}" />
                             <input type="submit" class="btn btn-primary pull-right" id="leave_comment_button" value="Comment">
                     {{-- </form> --}}
@@ -196,7 +198,6 @@
         </footer>
     </div>
     </div>
-    <button class="test">abc</button>
 </div>
 
 @endsection

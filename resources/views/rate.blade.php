@@ -17,38 +17,50 @@
     <div class="container">
         <div class="row" style="height: 200px"></div>
         <div class="row">
-            <script>
-                document.write('<a href="' + document.referrer + '" class="btn btn-primary">Back</a>');
-          </script>
+
+                <script>
+                    document.write('<a href="' + document.referrer + '" class="text-primary">Back</a>');
+              </script>
+
         </div>
         <div class="row" style="height: 100px"></div>
-        <div class="row"><h2>Rate this post:</h2></div>
-        <div class="row">
-            <ul class="list-inline rating"style="display:flex; list-style: none;text-decoration: none;" title="average rating">
-                @for ($count = 1; $count <= 5; $count++ )
-                @php
-                    if($count <= $rating){
-                        $color = 'color:#ffcc00';
-                    }else{
-                        $color = 'color:#ccc';
-                    }
+        <div class="row text-center"><h2>Rate this post:</h2></div>
+        <div class="row" style="height: 50px"></div>
+        <div class="row text-center mx-auto" >
+            <div class="col">
+                <ul class="list-inline rating"style="display:flex; justify-content: space-around; list-style: none;text-decoration: none;" title="average rating">
+                    <li></li>
+                    <li></li>
+                    @for ($count = 1; $count <= 5; $count++ )
+                    @php
+                        if($count <= $rating){
+                            $color = 'color:#ffcc00';
+                        }else{
+                            $color = 'color:#ccc';
+                        }
 
-                @endphp
-                    <li title="star-rating"
-                    id="{{$post->post_id}}-{{$count}}"
-                    data-index="{{$count}}"
-                    data-post_id="{{$post->post_id}}"
-                    data-user_id="{{$post->user->id}}"
-                    data-rating="{{$rating}}"
-                    class="rating"
-                    style="cursor:pointer; {{$color}}; font-size: 30px;"
+                    @endphp
+                        <li title="star-rating"
+                        id="{{$post->post_id}}-{{$count}}"
+                        data-index="{{$count}}"
+                        data-post_id="{{$post->post_id}}"
+                        data-user_id="{{$post->user->id}}"
+                        data-rating="{{$rating}}"
+                        class="rating"
+                        style="cursor:pointer; {{$color}}; font-size: 30px;"
 
-                    >&#9733</li>
-                @endfor
-            </ul>
+                        >&#9733</li>
+                    @endfor
+                    <li></li>
+                    <li></li>
+                </ul>
+            </div>
+
+
         </div>
 
     </div>
+
 
     <script>
         $.ajaxSetup({
@@ -98,6 +110,13 @@
                             _token: _token,
                             user_id: user_id,
 
+                        },
+                        success: function(data){
+                            if(data == 'done'){
+                                alert('You have rated ' + index + ' stars out of 5 for this post. Click back!')
+                            }else {
+                                alert('something went wrong');
+                            }
                         }
 
                     })

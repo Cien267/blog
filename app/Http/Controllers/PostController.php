@@ -8,12 +8,14 @@ use App\Post;
 use App\Rate;
 use App\User;
 use App\Comment;
-use Jorenvh\Share\Share;
+use App\Notification;
 
+use Jorenvh\Share\Share;
 use Illuminate\Http\Request;
 use App\Services\UserService;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewLikeNotification;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PostController extends Controller
@@ -124,11 +126,7 @@ class PostController extends Controller
                             ->twitter()
                             ->linkedin()
                             ->whatsapp()
-                            ->telegram()
-
-                       ;
-
-
+                            ->telegram();
         // dd($share);
         // $tags = Tag::with('posts')->first()->posts;
 
@@ -149,7 +147,30 @@ class PostController extends Controller
         $likeAmount++;
         $post->like = $likeAmount;
         $post->save();
+
+        $userId  = $post->user->id;
+        if($userId != auth()->user()->id){
+            $user = User::where('id',$userId)->first();
+            $user->notify(new NewLikeNotification($likeAmount));
+
+        }
+
+
         return back();
+    }
+
+    public function showNoti(){
+        // $notifications = Notification::all();
+        // $notifications = json_decode($notifications);
+        // dd($notifications);
+        // foreach($notifications as $noti){
+        //     dd($noti);
+        // }
+        $user = User::where('id',auth()->user()->id)->first();
+        $notifications =$user->notifications;
+        // dd($notifications);
+
+        return view('notification')->with('notifications', $notifications);
     }
 
 
@@ -167,7 +188,9 @@ class PostController extends Controller
         $rate->rating = $data['index'];
         $rate->user_id = $data['user_id'];
         $rate->save();
-        
+        echo 'done';
     }
+
+
 
 }

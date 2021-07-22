@@ -74,7 +74,6 @@ Route::get('{post}/rate', 'PostController@rate')->name('rate');
 
 Route::post('/insert-rate', 'PostController@insert_rate');
 
-
-
+Route::get('/notification', 'PostController@showNoti');
 
 
