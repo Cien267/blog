@@ -14,10 +14,13 @@
                 <input type="text" name="search" placeholder="search for title">
                 <input type="submit" value="Search" class="btn btn-primary">
             </form> --}}
-            <form class="form-inline" action="{{route('search')}}">
+            <form class="form-inline" action="{{route('search')}}" autocomplete="off">
+                {{csrf_field()}}
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <input class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search"
-                  aria-label="Search" name="search">
+                  aria-label="Search" name="search" id="keywords">
+                  <br>
+                  <div id="search_ajax" style="display: block;"></div>
                 <input type="submit" value="Search" class="btn btn-primary ml-3">
             </form>
         </div>
@@ -64,6 +67,9 @@
             <p class="copyright">Company Name © 2018</p>
             </footer>
         </div>
+
 </section>
+
+
 
 @endsection

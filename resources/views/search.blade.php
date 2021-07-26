@@ -12,12 +12,12 @@
         <a href="{{route('newsfeed')}}" class="btn btn-primary mb-4"><i class="fa fa-arrow-circle-left" aria-hidden="true"></i></a>
         <div class="container">
 
-            @foreach ($users as $user )
-                @if($user->posts->count() > 0)
-                    @foreach ($user->posts as $post )
+            @foreach ($posts as $post )
+
+                    {{-- @foreach ($user->posts as $post ) --}}
                         <div class="item mb-5">
                             <div class="media">
-                                <img class="mr-3 img-fluid post-thumb d-none d-md-flex avatar avatar-online" src="{{ url( '/images/'.$user->image ) }} " alt="image">
+                                <img class="mr-3 img-fluid post-thumb d-none d-md-flex avatar avatar-online" src="{{ url( '/images/'.$post->user->image ) }} " alt="image">
                                 <div class="media-body">
                                     <h3 class="title mb-1"><a href="{{route('post.detail', $post->post_id)}}">{{$post->post_title}}</a></h3>
                                     <div class="meta mb-1"><span class="date">Published at {{$post->created_at}}</span><span class="time"></span><span class="comment"><a href="#">4 comments</a></span></div>
@@ -26,8 +26,8 @@
                                 </div><!--//media-body-->
                             </div><!--//media-->
                         </div><!--//item-->
-                    @endforeach
-                @endif
+                    {{-- @endforeach --}}
+
             @endforeach
 
             <nav class="blog-nav nav nav-justified my-5">

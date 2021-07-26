@@ -2,15 +2,16 @@
 
 namespace App\Services;
 
-use App\Exceptions\UserException;
+use App\Post;
 use App\User;
+use App\Exceptions\UserException;
 
 class UserService
 {
 
-    public function search($id)
+    public function search($keysearch)
     {
-        $data = User::where('name', 'like', '%'. $id . '%')->get();
+        $data = Post::where('post_title', 'like', '%'. $keysearch . '%')->with('user')->get();
         if (count($data) <= 0) {
             throw new UserException();
         }

@@ -98,11 +98,26 @@ class PostController extends Controller
 
     }
 
+    //search
+
     public function search(Request $request){
 
         $data = $this->userService->search($request->input('search'));
 
-        return view('search',['users'=>$data]);
+        return view('search',['posts'=>$data]);
+    }
+
+    public function autocomplete_ajax(Request $request){
+        $data = $request->all();
+        if($data['query']){
+            $post = Post::where('post_title', 'like', '%'. $data['query'] . '%')->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach($post as $key => $val){
+                $output .= '<li class="li_autocomplete"><a href="#">'.$val->post_title.'</a></li>';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 
     public function detail(Post $post){

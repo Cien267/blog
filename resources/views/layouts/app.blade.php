@@ -20,9 +20,35 @@
 
     <script stype="text/javascript">
         $(document).ready(function () {
-            $('.test').click(function(){
-                console.log('hello');
+
+            //autocomplete search
+            $('#keywords').keyup(function(){
+                var query = $(this).val();
+                if(query != ''){
+                    var token = $('input[name="_token"]').val();
+                    $.ajax({
+                        url: "{{url('/autocomplete-ajax')}}",
+                        method: "POST",
+                        data :{
+                            query: query,
+                            token: token
+                        },
+                        success: function(data){
+                            $('#search_ajax').fadeIn();
+                            $('#search_ajax').html(data);
+                        }
+                    });
+                }else {
+                    $('#search_ajax').fadeOut();
+                }
             });
+
+            $(document).on('click','.li_autocomplete', function(){
+                $('#keywords').val($(this).text());
+                $('#search_ajax').fadeOut();
+            })
+
+
             //ajax
             $.ajaxSetup({
                 headers: {

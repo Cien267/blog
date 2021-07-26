@@ -52,6 +52,8 @@ Route::get('/newsfeed', 'PostController@getnewsfeed')->name('newsfeed');
 
 Route::get('/search', 'PostController@search')->name('search');
 
+Route::post('/autocomplete-ajax', 'PostController@autocomplete_ajax');
+
 Route::get('/error', 'PostController@search')->name('error');
 
 Route::get('/profile', 'HomeController@profile')->name('user.profile');

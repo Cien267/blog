@@ -810,6 +810,9 @@
             $('.sideBar-body').click(function(){
                 $(this).find('.pending').remove();
                 receiver_id = $(this).attr('id');
+                $('.sideBar-body').css("background-color", "");
+                $(this).css("background-color", "#f2f2f2");
+
                 $.ajax({
                     type: "get",
                     url: "message/" + receiver_id,
@@ -820,6 +823,7 @@
                     }
                 });
             });
+
 
             $(document).on('keyup', '#comment', function(e){
                 var message = $(this).val();
