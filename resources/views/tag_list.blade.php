@@ -19,10 +19,10 @@
     <div class="footer-basic">
         <footer>
             <div class="social">
-                <a href="#"><i class="icon fa fa-instagram"></i></a>
-                <a href="#"><i class="icon fa fa-snapchat"></i></a>
-                <a href="#"><i class="icon fa fa-twitter"></i></a>
-                <a href="#"><i class="icon fa fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-snapchat"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
             </div>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Home</a></li>

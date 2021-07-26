@@ -30,7 +30,7 @@
                             <a href="{{route('check-authorization',$post->user->id)}}"><img class="mr-3 img-fluid post-thumb d-none d-md-flex avatar avatar-online newsfeed" src="{{ url( '/images/'.$post->user->image ) }}" alt="image"></a>
                             <div class="media-body">
                                 <h3 class="title mb-1"><a href="{{route('post.detail', $post->post_id)}}">{{$post->post_title}}</a></h3>
-                                <div class="meta mb-1"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#">{{$post->comments->count()}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">{{$post->like}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true"></i></a></span></div>
+                                <div class="meta mb-1"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#">{{$post->comments->count()}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">{{$post->like}} <i class="far fa-thumbs-up"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true"></i></a></span></div>
                                 <div class="intro">{{$post->post_content}}</div>
                                 <a class="more-link" href="{{route('post.detail', $post->post_id)}}">Read more &rarr;</a>
                             </div><!--//media-body-->
@@ -49,10 +49,10 @@
     <div class="footer-basic">
         <footer>
             <div class="social">
-                <a href="#"><i class="icon fa fa-instagram"></i></a>
-                <a href="#"><i class="icon fa fa-snapchat"></i></a>
-                <a href="#"><i class="icon fa fa-twitter"></i></a>
-                <a href="#"><i class="icon fa fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-snapchat"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook-f"></i></a>
             </div>
             <ul class="list-inline">
                 <li class="list-inline-item"><a href="#">Home</a></li>

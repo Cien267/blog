@@ -1,8 +1,10 @@
 <?php
 use App\Events\NewComment;
+use App\Events\NewMessage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\MessageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -76,4 +78,12 @@ Route::post('/insert-rate', 'PostController@insert_rate');
 
 Route::get('/notification', 'PostController@showNoti');
 
+Route::get('/messenger', 'MessageController@index')->name('user.get');
+
+Route::get('/message/{id}', 'MessageController@getMessage')->name('message');
+
+Route::post('/message', 'MessageController@sendMessage');
+
+
+// Route::post('/messenger/store', 'MessageController@storeMsg')->name('msg.store');
 

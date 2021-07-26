@@ -43,7 +43,7 @@
 
 			    <header class="blog-post-header">
 				    <h2 class="title mb-2">{{$post->post_title}}</h2>
-				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="{{route('post.like', $post->post_id)}}">{{$post->like}} <i class="fa fa-thumbs-o-up" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></a></span> <span>
+				    <div class="meta mb-3"><span class="date">Published at {{$post->created_at}}  </span><span class="time pl-2"></span><span class="comment"><a href="#comment">{{count($comments)}} <i class="fa fa-comments" aria-hidden="true"></i></a></span><span class="comment pl-2"><a href="{{route('post.like', $post->post_id)}}">{{$post->like}} <i class="far fa-thumbs-up"></i></a></span><span class="comment pl-2"><a href="#">0 <i class="fa fa-share" aria-hidden="true" data-toggle="modal" data-target="#exampleModal"></i></a></span> <span>
                         <ul class="list-inline rating"style="display:flex" title="average rating">
                             @for ($count = 1; $count <= 5; $count++ )
                             @php
@@ -94,7 +94,7 @@
 				    </pre>
 			    </div>
 
-        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
 <div class="container mb-5 mt-5">
     <div class="card" id="comment">
@@ -182,10 +182,10 @@
   <div class="footer-basic">
     <footer>
         <div class="social">
-            <a href="#"><i class="icon fa fa-instagram"></i></a>
-            <a href="#"><i class="icon fa fa-snapchat"></i></a>
-            <a href="#"><i class="icon fa fa-twitter"></i></a>
-            <a href="#"><i class="icon fa fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-snapchat"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
         </div>
         <ul class="list-inline">
             <li class="list-inline-item"><a href="#">Home</a></li>
